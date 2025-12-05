@@ -1,0 +1,5 @@
+pandas
+rdflib
+numpy
+scipy
+openpyxl

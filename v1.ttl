@@ -1,0 +1,1182 @@
+@prefix : <https://w3id.org/HealthIoT#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix san: <https://www.irit.fr/recherches/MELODI/ontologies/SAN#> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <https://www.w3.org/ns/sosa/> .
+@prefix time: <https://www.w3.org/2006/time#> .
+@prefix saref: <https://saref.etsi.org/core> .
+@prefix healthiot: <https://w3id.org/HealthIoT> .
+@base <https://w3id.org/HealthIoT#> .
+
+<https://w3id.org/HealthIoT> rdf:type owl:Ontology ;
+                              owl:versionIRI <https://w3id.org/HealthIoT/1.1.1> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  https://w3id.org/HealthIoT#degree
+:degree rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/HealthIoT#fuzzyLabel
+:fuzzyLabel rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  https://w3id.org/HealthIoT#Adult
+:Adult rdf:type rdfs:Datatype ;
+       :fuzzyLabel """[
+        fuzzy:type \"triangular\" ;
+        fuzzy:a \"30\"^^xsd:integer ;
+        fuzzy:b \"47\"^^xsd:integer ;
+        fuzzy:c \"65\"^^xsd:integer
+    ]""" .
+
+
+###  https://w3id.org/HealthIoT#Old
+:Old rdf:type rdfs:Datatype ;
+     :fuzzyLabel """[
+        fuzzy:type \"triangular\" ;
+        fuzzy:a \"60\"^^xsd:integer ;
+        fuzzy:b \"75\"^^xsd:integer ;
+        fuzzy:c \"85\"^^xsd:integer
+    ]""" .
+
+
+###  https://w3id.org/HealthIoT#Young
+:Young rdf:type rdfs:Datatype ;
+       :fuzzyLabel """[
+        fuzzy:type \"triangular\" ;
+        fuzzy:a \"10\"^^xsd:integer ;
+        fuzzy:b \"20\"^^xsd:integer ;
+        fuzzy:c \"35\"^^xsd:integer
+    ]""" .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://saref.etsi.org/core#makesMeasurement
+<https://saref.etsi.org/core#makesMeasurement> rdf:type owl:ObjectProperty ;
+                                               rdfs:domain ssn:Device ;
+                                               rdfs:range ssn:Measurement .
+
+
+###  https://saref.etsi.org/core#relatesToMeasurement
+<https://saref.etsi.org/core#relatesToMeasurement> rdf:type owl:ObjectProperty ;
+                                                   owl:inverseOf <https://saref.etsi.org/core#relatesToProperty> ;
+                                                   rdfs:domain ssn:Property ;
+                                                   rdfs:range ssn:Measurement .
+
+
+###  https://saref.etsi.org/core#relatesToProperty
+<https://saref.etsi.org/core#relatesToProperty> rdf:type owl:ObjectProperty ;
+                                                rdfs:domain ssn:Measurement ;
+                                                rdfs:range ssn:Property .
+
+
+###  https://w3id.org/HealthIoT#about
+:about rdf:type owl:ObjectProperty ;
+       rdfs:domain :Alert ;
+       rdfs:range :Service .
+
+
+###  https://w3id.org/HealthIoT#alcoholConsumption
+:alcoholConsumption rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :relatedTo ;
+                    rdfs:domain :Patient ;
+                    rdfs:range :AlcoholConsumption .
+
+
+###  https://w3id.org/HealthIoT#analysis
+:analysis rdf:type owl:ObjectProperty ;
+          rdfs:domain :MedicalStaff ;
+          rdfs:range ssn:Measurement .
+
+
+###  https://w3id.org/HealthIoT#contains
+:contains rdf:type owl:ObjectProperty ;
+          rdfs:domain :MedicalObject ;
+          rdfs:range ssn:Device .
+
+
+###  https://w3id.org/HealthIoT#generates
+:generates rdf:type owl:ObjectProperty ;
+           rdfs:domain ssn:Device ;
+           rdfs:range :Alert .
+
+
+###  https://w3id.org/HealthIoT#hasMeasurement
+:hasMeasurement rdf:type owl:ObjectProperty ;
+                rdfs:domain :Patient ;
+                rdfs:range :Measurement .
+
+
+###  https://w3id.org/HealthIoT#hasScore
+:hasScore rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Patient ;
+          rdfs:range :HealthScore .
+
+
+###  https://w3id.org/HealthIoT#isMeasuredIn
+:isMeasuredIn rdf:type owl:ObjectProperty ;
+              rdfs:domain ssn:Measurement ;
+              rdfs:range <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> .
+
+
+###  https://w3id.org/HealthIoT#isPropertyOf
+:isPropertyOf rdf:type owl:ObjectProperty ;
+              rdfs:domain ssn:Property ;
+              rdfs:range ssn:FeatureOfInterest .
+
+
+###  https://w3id.org/HealthIoT#medicalCondition
+:medicalCondition rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :relatedTo ;
+                  rdfs:domain :Patient ;
+                  rdfs:range :Disease .
+
+
+###  https://w3id.org/HealthIoT#mood
+:mood rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :relatedTo ;
+      rdfs:domain :Patient ;
+      rdfs:range :Mood .
+
+
+###  https://w3id.org/HealthIoT#observes
+:observes rdf:type owl:ObjectProperty ;
+          rdfs:domain ssn:Device ;
+          rdfs:range ssn:Property .
+
+
+###  https://w3id.org/HealthIoT#produces
+:produces rdf:type owl:ObjectProperty ;
+          rdfs:domain :MedicalStaff ;
+          rdfs:range :Service .
+
+
+###  https://w3id.org/HealthIoT#relatedTo
+:relatedTo rdf:type owl:ObjectProperty ;
+           rdfs:domain :Context ;
+           rdfs:range :Patient ;
+           rdfs:label "related to" .
+
+
+###  https://w3id.org/HealthIoT#stressLevel
+:stressLevel rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :relatedTo ;
+             rdfs:domain :Patient ;
+             rdfs:range :Symptom .
+
+
+###  https://w3id.org/HealthIoT#wears
+:wears rdf:type owl:ObjectProperty ;
+       rdfs:domain ssn:FeatureOfInterest ;
+       rdfs:range ssn:Device .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://w3id.org/HealthIoT#age
+:age rdf:type owl:DatatypeProperty ;
+     rdfs:domain :Patient ;
+     rdfs:range xsd:integer .
+
+
+###  https://w3id.org/HealthIoT#alcoholFrequency
+:alcoholFrequency rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :AlcoholConsumption ;
+                  rdfs:range xsd:string .
+
+
+###  https://w3id.org/HealthIoT#deviceId
+:deviceId rdf:type owl:DatatypeProperty ;
+          rdfs:domain ssn:Device ,
+                      :MedicalObject ;
+          rdfs:range xsd:string ;
+          rdfs:comment "the identifier of a Medical Object" ;
+          rdfs:label "device id" .
+
+
+###  https://w3id.org/HealthIoT#exerciceAngina
+:exerciceAngina rdf:type owl:DatatypeProperty ;
+                rdfs:domain :PatientLifeStyle ;
+                rdfs:label "exercise angina" .
+
+
+###  https://w3id.org/HealthIoT#gender
+:gender rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Patient ;
+        rdfs:range xsd:string ;
+        rdfs:label "gender" .
+
+
+###  https://w3id.org/HealthIoT#hasBloodOxygen
+:hasBloodOxygen rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasBodyFat
+:hasBodyFat rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasCalorieIntake
+:hasCalorieIntake rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasDeepSleepDuration
+:hasDeepSleepDuration rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasHeartRateValue
+:hasHeartRateValue rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasMuscleMass
+:hasMuscleMass rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasNormalSleepDuration
+:hasNormalSleepDuration rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasREMSleepDuration
+:hasREMSleepDuration rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasTemperature
+:hasTemperature rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasWakeupHour
+:hasWakeupHour rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#hasWaterIntake
+:hasWaterIntake rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :value .
+
+
+###  https://w3id.org/HealthIoT#healthScore
+:healthScore rdf:type owl:DatatypeProperty ;
+             rdfs:domain ssn:FeatureOfInterest ,
+                         :Patient ;
+             rdfs:range xsd:float .
+
+
+###  https://w3id.org/HealthIoT#height
+:height rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Patient ;
+        rdfs:range xsd:float .
+
+
+###  https://w3id.org/HealthIoT#keywords
+:keywords rdf:type owl:DatatypeProperty ;
+          rdfs:domain :MedicalObject ;
+          rdfs:range xsd:string ;
+          rdfs:comment "some keywords that describes a medical object" ;
+          rdfs:label "keywords" .
+
+
+###  https://w3id.org/HealthIoT#manufacturer
+:manufacturer rdf:type owl:DatatypeProperty ;
+              rdfs:domain :MedicalObject ;
+              rdfs:range xsd:string .
+
+
+###  https://w3id.org/HealthIoT#name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:domain :MedicalObject ,
+                  :Patient ;
+      rdfs:range xsd:string .
+
+
+###  https://w3id.org/HealthIoT#patientId
+:patientId rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Patient ;
+           rdfs:range xsd:string ;
+           rdfs:comment "The unique identifier of  a patient" ;
+           rdfs:label "patient Id" .
+
+
+###  https://w3id.org/HealthIoT#residenceType
+:residenceType rdf:type owl:DatatypeProperty ;
+               rdfs:label "residence type" .
+
+
+###  https://w3id.org/HealthIoT#smokingStatus
+:smokingStatus rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Patient ;
+               rdfs:range xsd:boolean ;
+               rdfs:label "smoking status" .
+
+
+###  https://w3id.org/HealthIoT#stressLevel
+:stressLevel rdf:type owl:DatatypeProperty ;
+             rdfs:range xsd:string .
+
+
+###  https://w3id.org/HealthIoT#timestamp
+:timestamp rdf:type owl:DatatypeProperty ;
+           rdfs:domain ssn:Measurement ;
+           rdfs:range xsd:dateTimeStamp .
+
+
+###  https://w3id.org/HealthIoT#value
+:value rdf:type owl:DatatypeProperty ;
+       rdfs:domain ssn:Measurement ;
+       rdfs:range xsd:float ;
+       rdfs:label "value" .
+
+
+###  https://w3id.org/HealthIoT#weight
+:weight rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Patient ;
+        rdfs:range xsd:float .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://hl7.org/fhir/Medication
+fhir:Medication rdf:type owl:Class ;
+                rdfs:subClassOf :Treatment .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement
+<http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> rdf:type owl:Class ;
+                                                                            rdfs:comment "Defines the unit of each mesurement dtected by a sensor" ;
+                                                                            rdfs:label "Unit Measurement" .
+
+
+###  http://www.w3.org/ns/ssn/Device
+ssn:Device rdf:type owl:Class ;
+           rdfs:comment "represents the logical objects, which are embedded in the medical object in order to ease the task of data detection and the interaction with the environment." ;
+           rdfs:label "Device" .
+
+
+###  http://www.w3.org/ns/ssn/FeatureOfInterest
+ssn:FeatureOfInterest rdf:type owl:Class ;
+                      rdfs:comment "represents the real world entities which are monitored and observed by the connected object. In the context of the healthcare domain, this class corresponds to the patient" ;
+                      rdfs:label "Feature Of Interest" .
+
+
+###  http://www.w3.org/ns/ssn/Measurement
+ssn:Measurement rdf:type owl:Class ;
+                rdfs:comment "class represents the data stream captured from the connected objects." ;
+                rdfs:label "Measurement" .
+
+
+###  http://www.w3.org/ns/ssn/Property
+ssn:Property rdf:type owl:Class ;
+             rdfs:label "Property" .
+
+
+###  http://www.w3.org/ns/ssn/SensingDevice
+ssn:SensingDevice rdf:type owl:Class ;
+                  rdfs:subClassOf ssn:Device ;
+                  rdfs:label "Sensing Device" .
+
+
+###  https://w3id.org/HealthIoT#ActuatingDevice
+:ActuatingDevice rdf:type owl:Class ;
+                 rdfs:subClassOf ssn:Device ;
+                 rdfs:comment "A device that causes a machine or other device to operate." ;
+                 rdfs:label "Actuating Device" .
+
+
+###  https://w3id.org/HealthIoT#Actuator
+:Actuator rdf:type owl:Class ;
+          rdfs:subClassOf sosa:Actuator ;
+          rdfs:comment "A device that causes a machine or other device to operate." ;
+          rdfs:label "Actuator" .
+
+
+###  https://w3id.org/HealthIoT#AdultPatient
+:AdultPatient rdf:type owl:Class ;
+              rdfs:subClassOf :Patient .
+
+
+###  https://w3id.org/HealthIoT#AlcoholConsumption
+:AlcoholConsumption rdf:type owl:Class ;
+                    rdfs:subClassOf :PatientLifeStyle .
+
+
+###  https://w3id.org/HealthIoT#Alert
+:Alert rdf:type owl:Class ;
+       rdfs:comment """contains different categories of alerts that can be generated by
+the actuator device. These alerts can be for objects management or for patient monitoring (treatment adjsutement, emergency call for ambulance).""" ;
+       rdfs:label "Alert" .
+
+
+###  https://w3id.org/HealthIoT#BloodOxygen
+:BloodOxygen rdf:type owl:Class ;
+             rdfs:subClassOf :VitalSigns .
+
+
+###  https://w3id.org/HealthIoT#BodyFat
+:BodyFat rdf:type owl:Class ;
+         rdfs:subClassOf :VitalSigns ;
+         rdfs:comment "Body fat percentage is how much the body is made up of fat vs. bone and muscle." ;
+         rdfs:label "Body Fat" .
+
+
+###  https://w3id.org/HealthIoT#CalorieIntake
+:CalorieIntake rdf:type owl:Class ;
+               rdfs:subClassOf :HealthProperty ;
+               rdfs:label "Calorie Intake" .
+
+
+###  https://w3id.org/HealthIoT#Capability
+:Capability rdf:type owl:Class ;
+            rdfs:comment "presents the different characteristics and properties of the medical connected objects and their embedded devices." ;
+            rdfs:label "Capability" .
+
+
+###  https://w3id.org/HealthIoT#ConfigurationService
+:ConfigurationService rdf:type owl:Class ;
+                      rdfs:subClassOf :Service ;
+                      rdfs:comment "contains the state of the connected objects and the proposed solution." ;
+                      rdfs:label "Configuration Service" .
+
+
+###  https://w3id.org/HealthIoT#Context
+:Context rdf:type owl:Class ;
+         rdfs:comment """characterizes the MCOs and the obtained data about the monitored patient. In fact, the state of both MCOs and the patient’s
+health changes continuously according to several factors""" ;
+         rdfs:label "Context" .
+
+
+###  https://w3id.org/HealthIoT#DeepSleepDuration
+:DeepSleepDuration rdf:type owl:Class ;
+                   rdfs:subClassOf :SleepDuration ;
+                   rdfs:label "Deep Sleep Duration" .
+
+
+###  https://w3id.org/HealthIoT#DeviceProperty
+:DeviceProperty rdf:type owl:Class ;
+                rdfs:subClassOf ssn:Property ;
+                rdfs:comment "Determines the possible property status of a device. which can be available, unavailable, stop, move, shareable, unshareable, etc." ;
+                rdfs:label "Device Property" .
+
+
+###  https://w3id.org/HealthIoT#Diagnosis
+:Diagnosis rdf:type owl:Class ;
+           rdfs:subClassOf :Service ;
+           rdfs:label "Diagnosis" .
+
+
+###  https://w3id.org/HealthIoT#Disease
+:Disease rdf:type owl:Class ;
+         rdfs:subClassOf :Context ;
+         rdfs:comment "represents a chronic or an ordinary disease that may infect a person. It" ;
+         rdfs:label "Disease" .
+
+
+###  https://w3id.org/HealthIoT#Doctor
+:Doctor rdf:type owl:Class ;
+        rdfs:subClassOf :MedicalStaff .
+
+
+###  https://w3id.org/HealthIoT#HealthProperty
+:HealthProperty rdf:type owl:Class ;
+                rdfs:subClassOf ssn:Property ;
+                rdfs:comment "presents the possible heath property that are detected by the medical object for a patient" ;
+                rdfs:label "Health Property" .
+
+
+###  https://w3id.org/HealthIoT#HealthScore
+:HealthScore rdf:type owl:Class ;
+             rdfs:label "Health Score" .
+
+
+###  https://w3id.org/HealthIoT#HighBloodOxygen
+:HighBloodOxygen rdf:type owl:Class ;
+                 rdfs:subClassOf :BloodOxygen .
+
+
+###  https://w3id.org/HealthIoT#HighBodyFat
+:HighBodyFat rdf:type owl:Class ;
+             rdfs:subClassOf :BodyFat .
+
+
+###  https://w3id.org/HealthIoT#HighCalorieIntake
+:HighCalorieIntake rdf:type owl:Class ;
+                   rdfs:subClassOf :CalorieIntake .
+
+
+###  https://w3id.org/HealthIoT#HighDeepSleepDuration
+:HighDeepSleepDuration rdf:type owl:Class ;
+                       rdfs:subClassOf :DeepSleepDuration .
+
+
+###  https://w3id.org/HealthIoT#HighHeartRate
+:HighHeartRate rdf:type owl:Class ;
+               rdfs:subClassOf :Max_Heart_Rate .
+
+
+###  https://w3id.org/HealthIoT#HighMuscleMass
+:HighMuscleMass rdf:type owl:Class ;
+                rdfs:subClassOf :MuscleMass .
+
+
+###  https://w3id.org/HealthIoT#HighNormalSleepDuration
+:HighNormalSleepDuration rdf:type owl:Class ;
+                         rdfs:subClassOf :NormalSleepDuration .
+
+
+###  https://w3id.org/HealthIoT#HighREMSleepDuration
+:HighREMSleepDuration rdf:type owl:Class ;
+                      rdfs:subClassOf :REMSleepDuration .
+
+
+###  https://w3id.org/HealthIoT#HighRestingBP
+:HighRestingBP rdf:type owl:Class ;
+               rdfs:subClassOf :RestingBloodPressure .
+
+
+###  https://w3id.org/HealthIoT#HighRestingECG
+:HighRestingECG rdf:type owl:Class ;
+                rdfs:subClassOf :RestingElectrocardiogram .
+
+
+###  https://w3id.org/HealthIoT#HighRisk
+:HighRisk rdf:type owl:Class ;
+          rdfs:subClassOf :RiskPrediction .
+
+
+###  https://w3id.org/HealthIoT#HighTemperature
+:HighTemperature rdf:type owl:Class ;
+                 rdfs:subClassOf :Temperature .
+
+
+###  https://w3id.org/HealthIoT#HighWakeupsDuration
+:HighWakeupsDuration rdf:type owl:Class ;
+                     rdfs:subClassOf :WakeupsDuration .
+
+
+###  https://w3id.org/HealthIoT#HighWaterIntake
+:HighWaterIntake rdf:type owl:Class ;
+                 rdfs:subClassOf :WaterIntake .
+
+
+###  https://w3id.org/HealthIoT#Location
+:Location rdf:type owl:Class ;
+          rdfs:comment "describes the surrounding environment of the employed objects" ;
+          rdfs:label "Location" .
+
+
+###  https://w3id.org/HealthIoT#LowBloodOxygen
+:LowBloodOxygen rdf:type owl:Class ;
+                rdfs:subClassOf :BloodOxygen .
+
+
+###  https://w3id.org/HealthIoT#LowBodyFat
+:LowBodyFat rdf:type owl:Class ;
+            rdfs:subClassOf :BodyFat .
+
+
+###  https://w3id.org/HealthIoT#LowCalorieIntake
+:LowCalorieIntake rdf:type owl:Class ;
+                  rdfs:subClassOf :CalorieIntake .
+
+
+###  https://w3id.org/HealthIoT#LowDeepSleepDuration
+:LowDeepSleepDuration rdf:type owl:Class ;
+                      rdfs:subClassOf :DeepSleepDuration .
+
+
+###  https://w3id.org/HealthIoT#LowHeartRate
+:LowHeartRate rdf:type owl:Class ;
+              rdfs:subClassOf :Max_Heart_Rate .
+
+
+###  https://w3id.org/HealthIoT#LowMuscleMass
+:LowMuscleMass rdf:type owl:Class ;
+               rdfs:subClassOf :MuscleMass .
+
+
+###  https://w3id.org/HealthIoT#LowNormalSleepDuration
+:LowNormalSleepDuration rdf:type owl:Class ;
+                        rdfs:subClassOf :NormalSleepDuration .
+
+
+###  https://w3id.org/HealthIoT#LowREMSleepDuration
+:LowREMSleepDuration rdf:type owl:Class ;
+                     rdfs:subClassOf :REMSleepDuration .
+
+
+###  https://w3id.org/HealthIoT#LowRestingBP
+:LowRestingBP rdf:type owl:Class ;
+              rdfs:subClassOf :RestingBloodPressure .
+
+
+###  https://w3id.org/HealthIoT#LowRestingECG
+:LowRestingECG rdf:type owl:Class ;
+               rdfs:subClassOf :RestingElectrocardiogram .
+
+
+###  https://w3id.org/HealthIoT#LowRisk
+:LowRisk rdf:type owl:Class ;
+         rdfs:subClassOf :RiskPrediction .
+
+
+###  https://w3id.org/HealthIoT#LowTemperature
+:LowTemperature rdf:type owl:Class ;
+                rdfs:subClassOf :Temperature .
+
+
+###  https://w3id.org/HealthIoT#LowWakeupsDuration
+:LowWakeupsDuration rdf:type owl:Class ;
+                    rdfs:subClassOf :WakeupsDuration .
+
+
+###  https://w3id.org/HealthIoT#LowWaterIntake
+:LowWaterIntake rdf:type owl:Class ;
+                rdfs:subClassOf :WaterIntake .
+
+
+###  https://w3id.org/HealthIoT#Max_Heart_Rate
+:Max_Heart_Rate rdf:type owl:Class ;
+                rdfs:subClassOf :VitalSigns ;
+                rdfs:label "Heart Rate" .
+
+
+###  https://w3id.org/HealthIoT#Measurement
+:Measurement rdf:type owl:Class ;
+             rdfs:subClassOf ssn:Measurement .
+
+
+###  https://w3id.org/HealthIoT#MedicalObject
+:MedicalObject rdf:type owl:Class ;
+               rdfs:comment "A real world object that is used in the context of the healthcare domain (FitBit, Smartphone, Tablet, Scanner, Laser, etc.)" ;
+               rdfs:label "Medical Object" .
+
+
+###  https://w3id.org/HealthIoT#MedicalSensor
+:MedicalSensor rdf:type owl:Class ;
+               rdfs:subClassOf :Sensor ;
+               rdfs:label "Medical Sensor" .
+
+
+###  https://w3id.org/HealthIoT#MedicalStaff
+:MedicalStaff rdf:type owl:Class ;
+              rdfs:label "Medical Staff" .
+
+
+###  https://w3id.org/HealthIoT#MediumBloodOxygen
+:MediumBloodOxygen rdf:type owl:Class ;
+                   rdfs:subClassOf :BloodOxygen .
+
+
+###  https://w3id.org/HealthIoT#MediumBodyFat
+:MediumBodyFat rdf:type owl:Class ;
+               rdfs:subClassOf :BodyFat .
+
+
+###  https://w3id.org/HealthIoT#MediumCalorieIntake
+:MediumCalorieIntake rdf:type owl:Class ;
+                     rdfs:subClassOf :CalorieIntake .
+
+
+###  https://w3id.org/HealthIoT#MediumDeepSleepDuration
+:MediumDeepSleepDuration rdf:type owl:Class ;
+                         rdfs:subClassOf :DeepSleepDuration .
+
+
+###  https://w3id.org/HealthIoT#MediumHeartRate
+:MediumHeartRate rdf:type owl:Class ;
+                 rdfs:subClassOf :Max_Heart_Rate .
+
+
+###  https://w3id.org/HealthIoT#MediumMuscleMass
+:MediumMuscleMass rdf:type owl:Class ;
+                  rdfs:subClassOf :MuscleMass .
+
+
+###  https://w3id.org/HealthIoT#MediumNormalSleepDuration
+:MediumNormalSleepDuration rdf:type owl:Class ;
+                           rdfs:subClassOf :NormalSleepDuration .
+
+
+###  https://w3id.org/HealthIoT#MediumREMSleepDuration
+:MediumREMSleepDuration rdf:type owl:Class ;
+                        rdfs:subClassOf :REMSleepDuration .
+
+
+###  https://w3id.org/HealthIoT#MediumRestingBP
+:MediumRestingBP rdf:type owl:Class ;
+                 rdfs:subClassOf :RestingBloodPressure .
+
+
+###  https://w3id.org/HealthIoT#MediumRestingECG
+:MediumRestingECG rdf:type owl:Class ;
+                  rdfs:subClassOf :RestingElectrocardiogram .
+
+
+###  https://w3id.org/HealthIoT#MediumRisk
+:MediumRisk rdf:type owl:Class ;
+            rdfs:subClassOf :RiskPrediction .
+
+
+###  https://w3id.org/HealthIoT#MediumTemperature
+:MediumTemperature rdf:type owl:Class ;
+                   rdfs:subClassOf :Temperature .
+
+
+###  https://w3id.org/HealthIoT#MediumWakeupsDuration
+:MediumWakeupsDuration rdf:type owl:Class ;
+                       rdfs:subClassOf :WakeupsDuration .
+
+
+###  https://w3id.org/HealthIoT#MediumWaterIntake
+:MediumWaterIntake rdf:type owl:Class ;
+                   rdfs:subClassOf :WaterIntake .
+
+
+###  https://w3id.org/HealthIoT#Mood
+:Mood rdf:type owl:Class ;
+      rdfs:subClassOf :Symptom .
+
+
+###  https://w3id.org/HealthIoT#MuscleMass
+:MuscleMass rdf:type owl:Class ;
+            rdfs:subClassOf :HealthProperty ;
+            rdfs:label "Muscle Mass" .
+
+
+###  https://w3id.org/HealthIoT#NormalSleepDuration
+:NormalSleepDuration rdf:type owl:Class ;
+                     rdfs:subClassOf :SleepDuration ;
+                     rdfs:label "Normal Sleep Duration" .
+
+
+###  https://w3id.org/HealthIoT#Nurse
+:Nurse rdf:type owl:Class ;
+       rdfs:subClassOf :MedicalStaff .
+
+
+###  https://w3id.org/HealthIoT#OldPatient
+:OldPatient rdf:type owl:Class ;
+            rdfs:subClassOf :Patient .
+
+
+###  https://w3id.org/HealthIoT#Patient
+:Patient rdf:type owl:Class ;
+         rdfs:subClassOf ssn:FeatureOfInterest ;
+         rdfs:comment "represents the real world entities which are monitored and observed by the connected object. In the context of the healthcare domain, this class corresponds to the patient" ;
+         rdfs:label "Patient" .
+
+
+###  https://w3id.org/HealthIoT#PatientLifeStyle
+:PatientLifeStyle rdf:type owl:Class ;
+                  rdfs:subClassOf :Context ;
+                  rdfs:comment "Life style is any information related to the habit of a patient it may include the diet, the food that he eats, the smoking status, the alcohol consumption" ;
+                  rdfs:label "Patient Life Style" .
+
+
+###  https://w3id.org/HealthIoT#REMSleepDuration
+:REMSleepDuration rdf:type owl:Class ;
+                  rdfs:subClassOf :SleepDuration ;
+                  rdfs:label "REM Sleep Duration" .
+
+
+###  https://w3id.org/HealthIoT#RFIDS
+:RFIDS rdf:type owl:Class ;
+       rdfs:subClassOf ssn:SensingDevice ;
+       rdfs:comment "RFIDS tag used to track information about a feature of Interest" ;
+       rdfs:label "RFIDS" .
+
+
+###  https://w3id.org/HealthIoT#RestingBloodPressure
+:RestingBloodPressure rdf:type owl:Class ;
+                      rdfs:subClassOf :VitalSigns ;
+                      rdfs:label "Resting Blood Pressure" .
+
+
+###  https://w3id.org/HealthIoT#RestingElectrocardiogram
+:RestingElectrocardiogram rdf:type owl:Class ;
+                          rdfs:subClassOf :VitalSigns ;
+                          rdfs:label "RestingElectrocardiogram" .
+
+
+###  https://w3id.org/HealthIoT#RiskPrediction
+:RiskPrediction rdf:type owl:Class ;
+                rdfs:subClassOf :Service ;
+                rdfs:comment "represents the health complications of uncontrolled disease that may happen." ;
+                rdfs:label "Risk Prediction" .
+
+
+###  https://w3id.org/HealthIoT#Sensor
+:Sensor rdf:type owl:Class ;
+        rdfs:subClassOf ssn:SensingDevice ;
+        rdfs:comment "Sensor used to detect any information about a given Feature of Interest" ;
+        rdfs:label "Sensor" .
+
+
+###  https://w3id.org/HealthIoT#Service
+:Service rdf:type owl:Class ;
+         rdfs:comment "describes various services that can be generated by the medical connected objects. These services can be classified into several categories such as treatment services (HIoT:treatment), emergency services when the patient’s state is critical (HIoT:emergency-service) and con" ;
+         rdfs:label "Service" .
+
+
+###  https://w3id.org/HealthIoT#SleepDuration
+:SleepDuration rdf:type owl:Class ;
+               rdfs:subClassOf :HealthProperty ;
+               rdfs:label "Sleep Duration" .
+
+
+###  https://w3id.org/HealthIoT#Smoker
+:Smoker rdf:type owl:Class ;
+        rdfs:subClassOf :PatientLifeStyle .
+
+
+###  https://w3id.org/HealthIoT#StressLevel
+:StressLevel rdf:type owl:Class ;
+             rdfs:subClassOf :Symptom ;
+             rdfs:comment "designates the stress level of a patient that can be one of the three level: Moderate, High, Low" ;
+             rdfs:label "Stress Level" .
+
+
+###  https://w3id.org/HealthIoT#Symptom
+:Symptom rdf:type owl:Class ;
+         rdfs:subClassOf :Context ;
+         rdfs:comment "defines the symptom of such disease. This concept is instantiated with several symptoms like (cold-hands-and-feet, shortness of breath, etc)." ;
+         rdfs:label "Symptom" .
+
+
+###  https://w3id.org/HealthIoT#Temperature
+:Temperature rdf:type owl:Class ;
+             rdfs:subClassOf :VitalSigns ;
+             rdfs:label "Temperature" .
+
+
+###  https://w3id.org/HealthIoT#Treatment
+:Treatment rdf:type owl:Class ;
+           rdfs:subClassOf :Service ;
+           rdfs:label "Treatment" .
+
+
+###  https://w3id.org/HealthIoT#VirtualResource
+:VirtualResource rdf:type owl:Class ;
+                 rdfs:comment "each medical connected object has a virtual representation of the network, which facilitates its monitoring and configuration." ;
+                 rdfs:label "Virtual Resource" .
+
+
+###  https://w3id.org/HealthIoT#VitalSigns
+:VitalSigns rdf:type owl:Class ;
+            rdfs:subClassOf :HealthProperty ;
+            rdfs:comment "defines the detected vital signs of the patient such as the blood glucose, the blood pressure, heartbeat, and so on which are modeled as sub-classes of this concept." ;
+            rdfs:label "Vital Signs" .
+
+
+###  https://w3id.org/HealthIoT#WakeupsDuration
+:WakeupsDuration rdf:type owl:Class ;
+                 rdfs:subClassOf :SleepDuration ;
+                 rdfs:label "Wakeups Duration" .
+
+
+###  https://w3id.org/HealthIoT#WaterIntake
+:WaterIntake rdf:type owl:Class ;
+             rdfs:subClassOf :HealthProperty ;
+             rdfs:comment "The daily total water intake" ;
+             rdfs:label "Water Intake" .
+
+
+###  https://w3id.org/HealthIoT#YoungPatient
+:YoungPatient rdf:type owl:Class ;
+              rdfs:subClassOf :Patient .
+
+
+###  https://www.w3.org/ns/sosa/Actuator
+sosa:Actuator rdf:type owl:Class ;
+              rdfs:subClassOf :ActuatingDevice ;
+              rdfs:comment "A device that causes a machine or other device to operate." ;
+              rdfs:label "Actuator" .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/Percentage
+<http://www.ontology-of-units-of-measure.org/resource/om-2/Percentage> rdf:type owl:NamedIndividual ,
+                                                                                <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+                                                                       rdfs:comment "The percentage degree" ;
+                                                                       rdfs:label "Percentage" .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/calorie-Mean
+<http://www.ontology-of-units-of-measure.org/resource/om-2/calorie-Mean> rdf:type owl:NamedIndividual ,
+                                                                                  <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+                                                                         rdfs:comment "Unit of calorie" ;
+                                                                         rdfs:label "calorie Mean" .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/centimetre
+<http://www.ontology-of-units-of-measure.org/resource/om-2/centimetre> rdf:type owl:NamedIndividual ,
+                                                                                <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+                                                                       rdfs:comment "centimetre is a unit that can be used for heigth" ;
+                                                                       rdfs:label "centimetre" .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/degreeCelsius
+<http://www.ontology-of-units-of-measure.org/resource/om-2/degreeCelsius> rdf:type owl:NamedIndividual ,
+                                                                                   <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+                                                                          rdfs:comment "Celsius degree of a a body temperature" ;
+                                                                          rdfs:label "degree Celsius" .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/degreeFahrenheit
+<http://www.ontology-of-units-of-measure.org/resource/om-2/degreeFahrenheit> rdf:type owl:NamedIndividual ,
+                                                                                      <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+                                                                             rdfs:comment "Fahrenheit degree of a body temperature" ;
+                                                                             rdfs:label "degree Fahrenheit" .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/kilocalorie-Mean
+<http://www.ontology-of-units-of-measure.org/resource/om-2/kilocalorie-Mean> rdf:type owl:NamedIndividual ,
+                                                                                      <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/kilogram
+<http://www.ontology-of-units-of-measure.org/resource/om-2/kilogram> rdf:type owl:NamedIndividual ,
+                                                                              <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+                                                                     rdfs:comment "kilogram is a unit for weight" ;
+                                                                     rdfs:label "kilogram" .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/litre
+<http://www.ontology-of-units-of-measure.org/resource/om-2/litre> rdf:type owl:NamedIndividual ,
+                                                                           <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/metre
+<http://www.ontology-of-units-of-measure.org/resource/om-2/metre> rdf:type owl:NamedIndividual ,
+                                                                           <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+                                                                  rdfs:comment "metre is a unit to calculate the height" ;
+                                                                  rdfs:label "metre" .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/millimetreOfMercury
+<http://www.ontology-of-units-of-measure.org/resource/om-2/millimetreOfMercury> rdf:type owl:NamedIndividual ,
+                                                                                         <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+                                                                                rdfs:comment "millimetere of Mercury unit of measure" ;
+                                                                                rdfs:label "millimetre of Mercury" .
+
+
+###  https://w3id.org/HealthIoT#Anxious
+:Anxious rdf:type owl:NamedIndividual ,
+                  :Mood .
+
+
+###  https://w3id.org/HealthIoT#Available
+:Available rdf:type owl:NamedIndividual ,
+                    :DeviceProperty .
+
+
+###  https://w3id.org/HealthIoT#BeatsPerMinute
+:BeatsPerMinute rdf:type owl:NamedIndividual ,
+                         <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+                rdfs:comment "Beats per minute unit for heart rate" ;
+                rdfs:label "beats per minute" .
+
+
+###  https://w3id.org/HealthIoT#BloodOxygen
+:BloodOxygen rdf:type owl:NamedIndividual ,
+                      :BloodOxygen .
+
+
+###  https://w3id.org/HealthIoT#Diabetes
+:Diabetes rdf:type owl:NamedIndividual ,
+                   :Disease .
+
+
+###  https://w3id.org/HealthIoT#Elastic
+:Elastic rdf:type owl:NamedIndividual ,
+                  :DeviceProperty ;
+         rdfs:comment "it’s possible to add/remove resources in order to increase their capability (memory, lifetime, response time, etc)" ;
+         rdfs:label "Elastic" .
+
+
+###  https://w3id.org/HealthIoT#Happy
+:Happy rdf:type owl:NamedIndividual ,
+                :Mood .
+
+
+###  https://w3id.org/HealthIoT#HeartRate
+:HeartRate rdf:type owl:NamedIndividual ,
+                    :Max_Heart_Rate .
+
+
+###  https://w3id.org/HealthIoT#HeavyAlcoholConsumption
+:HeavyAlcoholConsumption rdf:type owl:NamedIndividual ,
+                                  :AlcoholConsumption ;
+                         :alcoholFrequency "Heavy" .
+
+
+###  https://w3id.org/HealthIoT#High
+:High rdf:type owl:NamedIndividual ,
+               :StressLevel ;
+      :stressLevel "High" ;
+      rdfs:comment "level of stress is high" ;
+      rdfs:label "High" .
+
+
+###  https://w3id.org/HealthIoT#Hypertension
+:Hypertension rdf:type owl:NamedIndividual ,
+                       :Disease .
+
+
+###  https://w3id.org/HealthIoT#Limited
+:Limited rdf:type owl:NamedIndividual ,
+                  :DeviceProperty ;
+         rdfs:comment "In almost of cases IoT resources have a maximum capacity as for instance with battery life time and energy consumption that if it is reached than the IoT resource is no longer working" ;
+         rdfs:label "Limited" .
+
+
+###  https://w3id.org/HealthIoT#Low
+:Low rdf:type owl:NamedIndividual ,
+              :StressLevel ;
+     :stressLevel "Low" ;
+     rdfs:comment "Level of stress is low" ;
+     rdfs:label "Low" .
+
+
+###  https://w3id.org/HealthIoT#Moderate
+:Moderate rdf:type owl:NamedIndividual ,
+                   :StressLevel ;
+          :stressLevel "Moderate" ;
+          rdfs:comment "Stress level is Moderate" ;
+          rdfs:label "Moderate" .
+
+
+###  https://w3id.org/HealthIoT#ModerateAlcoholConsumption
+:ModerateAlcoholConsumption rdf:type owl:NamedIndividual ,
+                                     :AlcoholConsumption ;
+                            :alcoholFrequency "Moderate" .
+
+
+###  https://w3id.org/HealthIoT#Move
+:Move rdf:type owl:NamedIndividual ,
+               :DeviceProperty ;
+      rdfs:comment "IoT resources are in moving state if their environment of deployment change during time" ;
+      rdfs:label "Move" .
+
+
+###  https://w3id.org/HealthIoT#Neutral
+:Neutral rdf:type owl:NamedIndividual ,
+                  :Mood .
+
+
+###  https://w3id.org/HealthIoT#NonAvailable
+:NonAvailable rdf:type owl:NamedIndividual ,
+                       :DeviceProperty ;
+              rdfs:comment "determines if the device is available to be used or not" ;
+              rdfs:label "Non available" .
+
+
+###  https://w3id.org/HealthIoT#NonElastic
+:NonElastic rdf:type owl:NamedIndividual ,
+                     :DeviceProperty ;
+            rdfs:comment "there is no possibility to change the capability of IoT resources" ;
+            rdfs:label "Non elastic" .
+
+
+###  https://w3id.org/HealthIoT#NonLimited
+:NonLimited rdf:type owl:NamedIndividual ,
+                     :DeviceProperty ;
+            rdfs:comment "IoT resources have unlimited capacity" ;
+            rdfs:label "Non limited" .
+
+
+###  https://w3id.org/HealthIoT#NonShareable
+:NonShareable rdf:type owl:NamedIndividual ,
+                       :DeviceProperty ;
+              rdfs:comment "IoT resources is capable to execute just one task at a given time" ;
+              rdfs:label "Non shareable" .
+
+
+###  https://w3id.org/HealthIoT#None
+:None rdf:type owl:NamedIndividual .
+
+
+###  https://w3id.org/HealthIoT#Off
+:Off rdf:type owl:NamedIndividual ,
+              :DeviceProperty ;
+     rdfs:comment "The device is on status Off and can not perform any task" ;
+     rdfs:label "Off" .
+
+
+###  https://w3id.org/HealthIoT#On
+:On rdf:type owl:NamedIndividual ,
+             :DeviceProperty ;
+    rdfs:comment "The device is on status On and is doing a task" ;
+    rdfs:label "On" .
+
+
+###  https://w3id.org/HealthIoT#Sad
+:Sad rdf:type owl:NamedIndividual ,
+              :Mood .
+
+
+###  https://w3id.org/HealthIoT#Shareable
+:Shareable rdf:type owl:NamedIndividual ,
+                    :DeviceProperty ;
+           rdfs:comment "IoT resources can perform two task at the same time" ;
+           rdfs:label "Shareable" .
+
+
+###  https://w3id.org/HealthIoT#Smoker
+:Smoker rdf:type owl:NamedIndividual ,
+                 :PatientLifeStyle .
+
+
+###  https://w3id.org/HealthIoT#Stop
+:Stop rdf:type owl:NamedIndividual ,
+               :DeviceProperty ;
+      rdfs:comment "IoT resources are deployed in a specific environement during a predefined period" ;
+      rdfs:label "Stop" .
+
+
+###  https://www.w3.org/2006/time#unitHour
+time:unitHour rdf:type owl:NamedIndividual ,
+                       <http://www.ontology-of-units-of-measure.org/resource/om-2#UnitMeasurement> ;
+              rdfs:comment "a Unit Hour for time unit" ;
+              rdfs:label "unit Hour" .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+:Smoker rdfs:comment "determines weither a patient smoke or not." ;
+        rdfs:label "Smoker" .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
