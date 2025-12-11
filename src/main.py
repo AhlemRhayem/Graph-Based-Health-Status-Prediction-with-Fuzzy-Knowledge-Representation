@@ -10,7 +10,7 @@ from ontology.health_ontology import HealthOntology
 if __name__ == "__main__":
     data = pd.read_excel("personal_health_data.xlsx")
 
-    from src.fuzzy.fuzzy_logic_config import fuzzy_sets   # If you want to move fuzzy sets also into its own file
+    from src.fuzzy.fuzzy_logic_config import fuzzy_sets   
 
     ontology = HealthOntology("ontology/v1.ttl")
 
